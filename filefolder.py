@@ -1,46 +1,52 @@
 import os
 from shutil import move
+from pathlib import Path
 from tkinter.filedialog import askdirectory
 
-directory:str = askdirectory()
-if directory is None or directory == "":    # No valid directory - Closes program
-    print("Can't continue without a valid directory! Closing here..")
-    exit()
+directory = Path(askdirectory())
+#print(directory)
+
+if not directory.is_dir() or str(directory) == ".":    # No valid directory - Closes program
+    input("Can't continue without a valid directory! Press enter to exit.. ")
+    if True:
+        exit(0)
 os.chdir(directory)
 
 def mover():
     counter:int = 0
-    # print(os.getcwd())
-    for filename in os.listdir():
-        if not os.path.isdir(filename) and not filename.endswith('.py'):    # for test purposes i excluded python files, but you don't have to!
-            file_name, file_extension = os.path.splitext(str(os.getcwd() + "\\" + filename))
-            
-            """print(f"{filename[:-len(file_extension)]}")
-            print(filename)
-            print(file_name)
-            print(file_extension)"""
+    for filename in directory.iterdir():
+        if filename.is_file() and filename != Path(__file__) and not filename.suffix == '':
+            counter+=1 
+            #print(f"{filename} :: {os.path.isdir(filename)}")
+            file_extension = filename.suffix
 
-            if file_extension == '':    #file with no extension
-                print("Can't deal with this kind of file! File has no extension :/")
-
+            new_dir = Path(str(filename)[:-len(file_extension)])
+            if not new_dir.exists():
+                #print('Folder doesn't exist)
+                new_dir.mkdir()
+                move(filename, new_dir)
             else:
-                if not os.path.exists(os.getcwd() + "\\" + file_name):
-                    os.mkdir(f"{filename[:-len(file_extension)]}")
-                
-                    move(str(os.getcwd() + "\\" + (filename)), str(os.getcwd() + "\\" + filename[:-len(file_extension)] + "\\" + filename))
-                    counter+=1
+                #print('Folder already exists')
+                move(filename, new_dir)
 
-                else:
-                    print('Folder already exists')
+        elif filename.is_dir():
+            print('This is already a folder!')
 
-                    move(str(os.getcwd() + "\\" + (filename)), str(os.getcwd() + "\\" + filename[:-len(file_extension)] + "\\" + filename))
-                    counter+=1
+        elif filename == Path(__file__):
+            print('This file represents myself!')
 
+        elif filename.is_file() and filename.suffix == '':
+            print('This file has no extension!')
+    
     if counter == 0:
-        print('There is nothing I can do here! Closing here..')
+        input("Can't continue without a valid directory! Press enter to exit.. ")
+        if True:
+            exit(0)
     else:
-        print(f'{counter} file(s) were moved!')
-        
+        input(f'{counter} file(s) were moved! Press enter to exit.. ')
+        if True:
+            exit(0)
+
 
 if __name__ == "__main__":
     mover()
