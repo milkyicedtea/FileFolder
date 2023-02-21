@@ -18,8 +18,8 @@ None! Only Python ~obviously, duh~, as this uses python builtins
 There really is no reason for it. I just don't see how it could be used from another module, and i didn't need to use it in other programs in the first place. If you need to use it for whatever reason, you can just edit out the code at end :)
 
 ## I found a bug, what do i do?
-If you found a bug you can either choose to fix it yourself, or create a PR and i will try and look into it
-> PS: if you manage to fix it by yourself, please create a PR with the issue and the related fix, it would be really appreciated!
+If you found a bug you can either choose to fix it yourself, or create an issue and i will try and look into it
+> PS: if you manage to fix it by yourself, please create a PR explaining the bug and the related fix, it would be really appreciated!
 
 ## Additional credits
 Thanks to everyone who replied to [this reddit post](https://www.reddit.com/r/Python/comments/1173nim/i_made_a_simple_script_to_folder_your_files/), and helped me understand the mistakes i made at first, it really was of great help :D
